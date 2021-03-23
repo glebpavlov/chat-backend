@@ -21,7 +21,13 @@ export const registrationBodySchema: JSONSchema7 = {
         password: {
           type: 'string',
           minLength: 3,
-          maxLength: 50
+          maxLength: 50,
+        },
+        email: {
+          type: 'string',
+          minLength: 3,
+          maxLength: 50,
+          pattern: "^[^@]+@[^@]+\\.[^@]+$"
         },
         firstName: {
           type: 'string',
@@ -43,5 +49,5 @@ export const registrationBodySchema: JSONSchema7 = {
       additionalProperties: false
     }
   },
-  required: ['recaptchaToken']
+  required: ['recaptchaToken', 'userData']
 }
