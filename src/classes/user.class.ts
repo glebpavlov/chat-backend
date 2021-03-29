@@ -1,4 +1,5 @@
-import { IUserBase, IUserRegistration } from "chat-common";
+import { IUserRegistration } from 'chat-common';
+
 // ВРЕМЕННО НЕ ИСПОЛЬЗУЕТСЯ
 export class User implements IUserRegistration {
   email!: string;
@@ -8,6 +9,7 @@ export class User implements IUserRegistration {
   password!: string;
   secondName!: string;
 
+  // tslint:disable-next-line:no-empty
   constructor() {
   }
 

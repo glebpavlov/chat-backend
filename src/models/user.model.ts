@@ -1,5 +1,5 @@
-import { Document, model, Schema } from "mongoose";
-import { IUserBase } from "chat-common";
+import { Document, model, Schema } from 'mongoose';
+import { IUserBase } from 'chat-common';
 
 /**
  * интерфейс монго документа пользователя

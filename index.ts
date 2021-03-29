@@ -1,7 +1,7 @@
 import express from 'express';
-import { apiRoute } from "./src/routes/api/api.route";
-import bodyParser from "body-parser";
-import { ValidationError } from "express-json-validator-middleware";
+import { apiRoute } from './src/routes/api/api.route';
+import bodyParser from 'body-parser';
+import { ValidationError } from 'express-json-validator-middleware';
 
 import mongoose from 'mongoose';
 
@@ -27,7 +27,7 @@ app.use((err: any, req: any, res: any, next: any) => {
         message: 'Validation error',
         validations: err.validationErrors
       },
-  });
+    });
     next();
   } else next(err); // pass error on if not a validation error
 });

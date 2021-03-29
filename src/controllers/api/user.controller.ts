@@ -1,13 +1,17 @@
-import { IRegistrationRequest } from "chat-common";
-import { UserUtilities } from "../../utilities/user.utilities";
-import { UserModel } from "../../models/user.model";
+import { IAuthenticationRequest, IRegistrationRequest } from 'chat-common';
+import { UserUtilities } from '../../utilities/user.utilities';
+import { UserModel } from '../../models/user.model';
 
 export class UserController {
-  static registration(registrationData: IRegistrationRequest) {
+  /**
+   * контроллер регистрации
+   * @param registrationRequest данные регистрации
+   */
+  static registration(registrationRequest: IRegistrationRequest) {
     // создаем копию данных и кодируем пароль
     const dbData = {
-      ...registrationData.userData,
-      password: UserUtilities.encodeDBPassword(registrationData.userData.password)
+      ...registrationRequest.registrationData,
+      password: UserUtilities.encodeDBPassword(registrationRequest.registrationData.password)
     };
     const user = new UserModel(dbData);
     return user.save()
@@ -23,5 +27,28 @@ export class UserController {
         // если мы не знаем ошибку - шлем дальше оригинал
         throw error;
       })
+  }
+
+  /**
+   * контроллер авторизации
+   * @param authenticationRequest данные авторизации
+   */
+  static authentication(authenticationRequest: IAuthenticationRequest) {
+    return UserModel.findOne({
+      login: authenticationRequest.authenticationData.login,
+      password: UserUtilities.encodeDBPassword(authenticationRequest.authenticationData.password)
+    })
+      .then((userDocument) => {
+        if (userDocument) {
+          return {
+            user: UserUtilities.clearUserData(userDocument),
+            token: UserUtilities.generateJwt(userDocument)
+          }
+          // если нет документа, значит данные авторизации неправильные
+        } else {
+          throw {message: 'user or password not found', status: 401};
+        }
+      });
+
   }
 }

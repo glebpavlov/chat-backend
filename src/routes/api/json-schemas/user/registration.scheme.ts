@@ -1,16 +1,16 @@
-import { JSONSchema7 } from "json-schema";
+import { JSONSchema7 } from 'json-schema';
 
 /**
- * схема валидации запроса регистрации пользователя
+ * схема валидации тела запроса регистрации пользователя
  */
-export const registrationBodySchema: JSONSchema7 = {
+export const registrationBodyScheme: JSONSchema7 = {
   type: 'object',
   additionalProperties: false,
   properties: {
     recaptchaToken: {
       type: 'string',
     },
-    userData: {
+    registrationData: {
       type: 'object',
       properties: {
         login: {
@@ -27,7 +27,7 @@ export const registrationBodySchema: JSONSchema7 = {
           type: 'string',
           minLength: 3,
           maxLength: 50,
-          pattern: "^[^@]+@[^@]+\\.[^@]+$"
+          pattern: '^[^@]+@[^@]+\\.[^@]+$'
         },
         firstName: {
           type: 'string',
@@ -49,5 +49,5 @@ export const registrationBodySchema: JSONSchema7 = {
       additionalProperties: false
     }
   },
-  required: ['recaptchaToken', 'userData']
+  required: ['recaptchaToken', 'registrationData']
 }
